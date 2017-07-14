@@ -6,3 +6,6 @@ The goal is for candidates to complete the coding challenge before the
 in-person interview so that we can discuss the solution together.
 In cases where this is not possible, we may discuss the solution together
 over a followup phone call.
+
+### Notes
+* Added little-loader to get google maps api on demand
