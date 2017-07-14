@@ -12,8 +12,17 @@ class FavoriteStores extends Component {
   };
 
   static propTypes = {
-    previewStore: PropTypes.object.isRequired
+    previewStore: PropTypes.object.isRequired,
+    cleanPreviewStore: PropTypes.func.isRequired
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    // favorite stores increment
+    if (prevState.favoriteStores.length < this.state.favoriteStores.length) {
+      // clean preview store
+      this.props.cleanPreviewStore();
+    }
+  }
 
   addStoreToFavorites = () => {
     this.setState((prevState, props) => ({

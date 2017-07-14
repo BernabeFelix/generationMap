@@ -9,6 +9,12 @@ class Container extends Component {
     this.state = { stores };
   }
 
+  cleanPreviewStore = () => {
+    this.setState({
+      previewStore: {}
+    });
+  };
+
   setNewPreviewStore = previewStore => {
     this.setState({
       previewStore
@@ -20,7 +26,10 @@ class Container extends Component {
 
     return (
       <div style={divStyle}>
-        <FavoriteStores previewStore={this.state.previewStore} />
+        <FavoriteStores
+          cleanPreviewStore={this.cleanPreviewStore}
+          previewStore={this.state.previewStore}
+        />
         <CustomMap
           stores={stores}
           markerClickCallback={this.setNewPreviewStore}
