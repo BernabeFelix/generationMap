@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
-import { createMarker, getNewMap } from './map_utils';
+import { createMarkers, getNewMap } from './map_utils';
 
 export default class GenerationMap extends Component {
   static propTypes = {
@@ -15,29 +15,14 @@ export default class GenerationMap extends Component {
   initMap() {
     getNewMap('Mexico City', this.refs.map).then(
       ({ map, geocoder }) => {
-        this.setState({ map, geocoder });
-        this.createMarkers();
+        const { stores, markerClickCallback } = this.props;
+        createMarkers(geocoder, map, markerClickCallback, stores);
+        this.setState({ geocoder, map });
       },
       error => {
         alert(`The Map could not be initialized because ${error}`);
       }
     );
-  }
-
-  createMarkers() {
-    const { geocoder, map } = this.state;
-    const { stores } = this.props;
-
-    // todo: create only 50 markers by sec (api limits)
-    stores.forEach((storeObj, i) => {
-      createMarker(storeObj, map, geocoder).then(newMarker => {
-        if (newMarker) {
-          newMarker.addListener('click', () =>
-            this.props.markerClickCallback(storeObj)
-          );
-        }
-      });
-    });
   }
 
   render() {
