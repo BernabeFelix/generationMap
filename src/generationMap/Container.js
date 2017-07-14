@@ -9,13 +9,23 @@ class Container extends Component {
     this.state = { stores };
   }
 
+  setNewPreviewStore = previewStore => {
+    console.log(`new previewStore: `, previewStore);
+    this.setState({
+      previewStore
+    });
+  };
+
   render() {
     const stores = this.state.stores;
 
     return (
       <div style={divStyle}>
         <FavoriteStores />
-        <CustomMap stores={stores} />
+        <CustomMap
+          stores={stores}
+          markerClickCallback={this.setNewPreviewStore}
+        />
       </div>
     );
   }

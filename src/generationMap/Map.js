@@ -1,8 +1,13 @@
 'use strict';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { createMarker, getNewMap } from './map_utils';
 
 export default class GenerationMap extends Component {
+  static propTypes = {
+    markerClickCallback: PropTypes.func.isRequired,
+    stores: PropTypes.array.isRequired
+  };
+
   componentDidMount() {
     this.initMap();
   }
@@ -23,7 +28,16 @@ export default class GenerationMap extends Component {
     const { geocoder, map } = this.state;
     const { stores } = this.props;
 
-    stores.forEach(storeObj => createMarker(storeObj, map, geocoder));
+    // todo: create only 50 markers by sec (api limits)
+    stores.forEach((storeObj, i) => {
+      createMarker(storeObj, map, geocoder).then(newMarker => {
+        if (newMarker) {
+          newMarker.addListener('click', () =>
+            this.props.markerClickCallback(storeObj)
+          );
+        }
+      });
+    });
   }
 
   render() {

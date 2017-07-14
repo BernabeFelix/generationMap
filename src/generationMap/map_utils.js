@@ -1,15 +1,16 @@
 'use strict';
 import load from 'little-loader';
 
-export const createMarker = (storeObj, map, geocoder) => {
-  getLocationByName(geocoder, storeObj.Address).then(
+export const createMarker = (storeObj, map, geocoder, clickCallback) => {
+  return getLocationByName(geocoder, storeObj.Address).then(
     position => {
-      const marker = new google.maps.Marker({ map, position });
+      return new google.maps.Marker({ map, position });
     },
     error => {
       console.warn(
         `Marker could not be created, name: ${storeObj.Name}, address: ${storeObj.Address}, error: ${error}`
       );
+      return false;
     }
   );
 };
