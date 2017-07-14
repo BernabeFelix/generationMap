@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FavoriteStores from './FavoriteStores';
 import CustomMap from './Map';
 import stores from '../data/store_directory.json';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Container extends Component {
   constructor() {
@@ -26,10 +27,12 @@ class Container extends Component {
 
     return (
       <div style={divStyle}>
-        <FavoriteStores
-          cleanPreviewStore={this.cleanPreviewStore}
-          previewStore={this.state.previewStore}
-        />
+        <MuiThemeProvider>
+          <FavoriteStores
+            cleanPreviewStore={this.cleanPreviewStore}
+            previewStore={this.state.previewStore}
+          />
+        </MuiThemeProvider>
         <CustomMap
           stores={stores}
           markerClickCallback={this.setNewPreviewStore}

@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "little-loader": "^0.2.0",
+    "material-ui": "^0.18.6",
     "react": "^0.14.6",
     "react-dom": "^0.14.6"
   }
