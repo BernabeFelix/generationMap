@@ -1,10 +1,12 @@
 'use strict';
 import load from 'little-loader';
+import isMobile from '../shared/detectMobile';
 
 export const createMarkers = (geocoder, map, markerClickCallback, stores) => {
   // Note: This has to be done because google maps api has a request limit
   const maxReqPerSec = 1;
-  const loops = Math.ceil(stores.length / maxReqPerSec); //e.g. 233/50 = 5
+  //todo: remove this comments
+  const loops = 4; //Math.ceil(stores.length / maxReqPerSec); //e.g. 233/50 = 5
   let storesChunk = [];
 
   for (var i = 0; i < loops; i++) {
@@ -79,7 +81,7 @@ export const getNewMap = (initialPosition, mapRef) => {
           // create map instance
           const map = new google.maps.Map(mapRef, {
             center: location,
-            zoom: 10
+            zoom: isMobile.any() ? 12 : 10
           });
 
           resolve({ map, geocoder });
