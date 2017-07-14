@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import load from 'little-loader';
+import { createMarker } from './Marker';
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyCVH8e45o3d-5qmykzdhGKd1-3xYua5D2A';
 
@@ -11,6 +12,13 @@ export default class GenerationMap extends Component {
       this.createMap, //callback
       this
     ); //context
+  }
+
+  createMarkers() {
+    const { geocoder, map } = this.state;
+    const { stores } = this.props;
+
+    stores.forEach(storeObj => createMarker(storeObj, map, geocoder));
   }
 
   createMap(err) {
@@ -32,6 +40,9 @@ export default class GenerationMap extends Component {
             geocoder,
             map
           });
+
+          // create markers
+          self.createMarkers();
         } else {
           // show alert in case an error happens with mexico city's location
           alert(
