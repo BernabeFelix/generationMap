@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FavoriteStores from './FavoriteStores';
+import FavoriteStores from './favorite_stores/List';
 import CustomMap from './map/Map';
 import stores from '../data/store_directory.json';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
