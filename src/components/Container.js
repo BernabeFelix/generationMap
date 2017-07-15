@@ -1,42 +1,19 @@
 import React, { Component } from 'react';
 import FavoriteStores from './favorite_stores/List';
 import CustomMap from './map/Map';
-import stores from '../data/store_directory.json';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Container extends Component {
-  constructor() {
-    super();
-    this.state = { stores };
-  }
-
   cleanPreviewStore = () => {
     this.setState({
       previewStore: {}
     });
   };
 
-  setNewPreviewStore = previewStore => {
-    this.setState({
-      previewStore
-    });
-  };
-
   render() {
-    const stores = this.state.stores;
-
     return (
       <div style={divStyle}>
-        <MuiThemeProvider>
-          <FavoriteStores
-            cleanPreviewStore={this.cleanPreviewStore}
-            previewStore={this.state.previewStore}
-          />
-        </MuiThemeProvider>
-        <CustomMap
-          stores={stores}
-          markerClickCallback={this.setNewPreviewStore}
-        />
+        <FavoriteStores cleanPreviewStore={this.cleanPreviewStore} />
+        <CustomMap />
       </div>
     );
   }

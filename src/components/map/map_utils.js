@@ -81,6 +81,7 @@ export const getNewMap = (initialPosition, mapRef) => {
           // create map instance
           const map = new google.maps.Map(mapRef, {
             center: location,
+            scrollwheel: false,
             zoom: isMobile.any() ? 12 : 10
           });
 

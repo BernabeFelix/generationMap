@@ -1,22 +1,31 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
+
 import { createMarkers, getNewMap } from './map_utils';
+import FavoriteBanner from '../favorite_banner/Banner';
+import stores from '../../data/store_directory.json';
 
 export default class GenerationMap extends Component {
-  static propTypes = {
-    markerClickCallback: PropTypes.func.isRequired,
-    stores: PropTypes.array.isRequired
-  };
+  constructor() {
+    super();
+    this.state = { stores };
+  }
 
   componentDidMount() {
     this.initMap();
   }
 
+  showMarkerData = markerData => {
+    this.setState({
+      markerData
+    });
+  };
+
   initMap() {
     getNewMap('Mexico City', this.refs.map).then(
       ({ map, geocoder }) => {
-        const { stores, markerClickCallback } = this.props;
-        createMarkers(geocoder, map, markerClickCallback, stores);
+        const stores = this.state.stores;
+        createMarkers(geocoder, map, this.showMarkerData, stores);
         this.setState({ geocoder, map });
       },
       error => {
@@ -26,11 +35,18 @@ export default class GenerationMap extends Component {
   }
 
   render() {
-    return <div ref="map" style={mapStyle} />;
+    return (
+      <div style={{ position: 'relative' }}>
+        <div ref="map" style={mapStyle} />
+        {this.state.markerData
+          ? <FavoriteBanner markerData={this.state.markerData} />
+          : ''}
+      </div>
+    );
   }
 }
 
 const mapStyle = {
-  width: '100vw',
-  height: '400px'
+  width: '100%',
+  height: '100vh'
 };
