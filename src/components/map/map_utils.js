@@ -1,6 +1,6 @@
 'use strict';
 import load from 'little-loader';
-import isMobile from '../shared/detectMobile';
+import isMobile from '../../utils/detectMobile';
 
 export const createMarkers = (geocoder, map, markerClickCallback, stores) => {
   // Note: This has to be done because google maps api has a request limit

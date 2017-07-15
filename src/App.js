@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GenerationMapContainer from './generationMap/Container';
+import GenerationMapContainer from './components/Container';
 
 export default class App extends Component {
   render() {
