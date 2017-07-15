@@ -12,12 +12,18 @@ import IconButton from 'material-ui/IconButton';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 
 class Banner extends Component {
-  static defaultProps = {
-    isMarkerSelectedFavorite: false
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+    storeIndex: PropTypes.number.isRequired
   };
 
-  static propTypes = {
-    markerData: PropTypes.object.isRequired
+  componentDidUpdate(prevState) {
+    console.log(prevState);
+    console.log(this.state);
+  }
+
+  addToFavorites = () => {
+    this.props.addStoreToFavorites(this.props.storeIndex);
   };
 
   render() {
@@ -50,18 +56,18 @@ class Banner extends Component {
         >
           <List>
             <ListItem
-              primaryText={this.props.markerData.Name}
+              primaryText={this.props.store.Name}
               rightIconButton={deleteFavoriteButton}
-              secondaryText={this.props.markerData.Address}
+              secondaryText={this.props.store.Address}
             />
           </List>
           <BottomNavigation
-            selectedIndex={this.props.isMarkerSelectedFavorite ? 0 : -1}
+            selectedIndex={this.props.store.isFavorite ? 0 : -1}
           >
             <BottomNavigationItem
               label="Favorites"
               icon={<ActionFavorite />}
-              onTouchTap={() => console.log('Im in favorites')}
+              onClick={this.addToFavorites}
             />
           </BottomNavigation>
         </div>

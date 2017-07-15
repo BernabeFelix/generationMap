@@ -2,7 +2,13 @@
 import load from 'little-loader';
 import isMobile from '../../utils/detectMobile';
 
-export const createMarkers = (geocoder, map, markerClickCallback, stores) => {
+export const createMarkers = (
+  addMarkerToStore,
+  geocoder,
+  map,
+  markerClickCallback,
+  stores
+) => {
   // Note: This has to be done because google maps api has a request limit
   const maxReqPerSec = 1;
   //todo: remove this comments
@@ -22,22 +28,38 @@ export const createMarkers = (geocoder, map, markerClickCallback, stores) => {
     }
     // create markers every sec
     setTimeout(
-      (storesChunk => {
+      ((storesChunk, i) => {
         return () => {
-          createMarkersChunk(geocoder, map, markerClickCallback, storesChunk);
+          createMarkersChunk(
+            addMarkerToStore,
+            geocoder,
+            map,
+            markerClickCallback,
+            storesChunk,
+            i * maxReqPerSec
+          );
         };
-      })(storesChunk),
+      })(storesChunk, i),
       1000 * i
     );
   }
 };
 
-function createMarkersChunk(geocoder, map, markerClickCallback, storesChunk) {
-  console.log(storesChunk);
+function createMarkersChunk(
+  addMarkerToStore,
+  geocoder,
+  map,
+  markerClickCallback,
+  storesChunk,
+  chunkInitialIndex
+) {
   storesChunk.forEach((storeObj, i) => {
     createMarker(storeObj, map, geocoder).then(newMarker => {
       if (newMarker) {
-        newMarker.addListener('click', () => markerClickCallback(storeObj));
+        newMarker.addListener('click', () =>
+          markerClickCallback(chunkInitialIndex + i)
+        );
+        addMarkerToStore(newMarker, chunkInitialIndex + i);
       }
     });
   });
@@ -46,7 +68,10 @@ function createMarkersChunk(geocoder, map, markerClickCallback, storesChunk) {
 function createMarker(storeObj, map, geocoder, clickCallback) {
   return getLocationByName(geocoder, storeObj.Address).then(
     position => {
+      const icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
       return new google.maps.Marker({
+        icon,
         map,
         position,
         animation: google.maps.Animation.DROP
@@ -105,3 +130,8 @@ function getLocationByName(geocoder, address) {
     });
   });
 }
+
+export const setMarketFavorite = marker => {
+  const blueMarker = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+  marker.setIcon(blueMarker);
+};
