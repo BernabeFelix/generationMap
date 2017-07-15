@@ -14,16 +14,12 @@ import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 class Banner extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
-    storeIndex: PropTypes.number.isRequired
+    storeIndex: PropTypes.number.isRequired,
+    toggleStoreToFavorites: PropTypes.func.isRequired
   };
 
-  componentDidUpdate(prevState) {
-    console.log(prevState);
-    console.log(this.state);
-  }
-
-  addToFavorites = () => {
-    this.props.addStoreToFavorites(this.props.storeIndex);
+  toggleStoreToFavorites = () => {
+    this.props.toggleStoreToFavorites(this.props.storeIndex);
   };
 
   render() {
@@ -67,7 +63,7 @@ class Banner extends Component {
             <BottomNavigationItem
               label="Favorites"
               icon={<ActionFavorite />}
-              onClick={this.addToFavorites}
+              onClick={this.toggleStoreToFavorites}
             />
           </BottomNavigation>
         </div>

@@ -1,7 +1,7 @@
 'use strict';
 import React, { Component, PropTypes } from 'react';
 
-import { createMarkers, getNewMap, setMarketFavorite } from './utils';
+import { createMarkers, getNewMap, toggleMarketFavorite } from './utils';
 import FavoriteBanner from '../favorite_banner/Banner';
 import stores from '../../data/store_directory.json';
 
@@ -15,10 +15,12 @@ export default class GenerationMap extends Component {
     this.initMap();
   }
 
-  addStoreToFavorites = index => {
+  toggleStoreToFavorites = index => {
     this.setState(prevState => {
+      const storeToToggle = prevState.stores[index];
+      const isFavorite = !storeToToggle.isFavorite;
       // update store, set isFavorite flag to true
-      const storeUpdated = { ...prevState.stores[index], isFavorite: true };
+      const storeUpdated = { ...storeToToggle, isFavorite };
       // update stores array
       // update storeInfo to display colored heart
       const newState = {
@@ -31,7 +33,7 @@ export default class GenerationMap extends Component {
       };
 
       // update marker
-      setMarketFavorite(storeUpdated.marker);
+      toggleMarketFavorite(storeUpdated.marker, isFavorite);
 
       return newState;
     });
@@ -42,7 +44,7 @@ export default class GenerationMap extends Component {
       return {
         stores: [
           ...prevState.stores.slice(0, index),
-          { ...prevState.stores[index], marker },
+          { ...prevState.stores[index], marker, isFavorite: false },
           ...prevState.stores.slice(index + 1)
         ]
       };
@@ -85,7 +87,7 @@ export default class GenerationMap extends Component {
           ? <FavoriteBanner
               store={this.state.storeInfo}
               storeIndex={this.state.storeIndex}
-              addStoreToFavorites={this.addStoreToFavorites}
+              toggleStoreToFavorites={this.toggleStoreToFavorites}
             />
           : ''}
       </div>

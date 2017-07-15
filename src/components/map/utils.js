@@ -2,6 +2,8 @@
 import load from 'little-loader';
 import isMobile from '../../utils/detectMobile';
 
+const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
 export const createMarkers = (
   addMarkerToStore,
   geocoder,
@@ -68,10 +70,8 @@ function createMarkersChunk(
 function createMarker(storeObj, map, geocoder, clickCallback) {
   return getLocationByName(geocoder, storeObj.Address).then(
     position => {
-      const icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-
       return new google.maps.Marker({
-        icon,
+        icon: defaultIcon,
         map,
         position,
         animation: google.maps.Animation.DROP
@@ -131,7 +131,7 @@ function getLocationByName(geocoder, address) {
   });
 }
 
-export const setMarketFavorite = marker => {
+export const toggleMarketFavorite = (marker, isFavorite) => {
   const blueMarker = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-  marker.setIcon(blueMarker);
+  marker.setIcon(isFavorite ? blueMarker : defaultIcon);
 };
