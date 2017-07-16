@@ -5,13 +5,24 @@ import StoreInfo from '../favorite_banner/StoreInfo';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { List, Subheader } from 'material-ui';
 
-const FavoriteStores = ({ stores, removeStore }) => {
+const FavoriteStores = ({ removeStore, show, stores, width }) => {
+  const subheaderStr = show ? 'My Favorite Stores' : '';
+  const styles = {
+    height: '100%',
+    width: show ? width : 0,
+    backgroundColor: 'white',
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
+    transition: 'width 1s'
+  };
+
   return (
     <div style={styles}>
       <MuiThemeProvider>
         <List>
           <Subheader style={{ fontFamily: 'Roboto, sans-serif' }}>
-            My Favorite Stores
+            {subheaderStr}
           </Subheader>
           {stores
             .map((store, i) => {
@@ -33,16 +44,9 @@ const FavoriteStores = ({ stores, removeStore }) => {
 
 FavoriteStores.propTypes = {
   removeStore: PropTypes.func.isRequired,
-  stores: PropTypes.array.isRequired
-};
-
-const styles = {
-  height: '100%',
-  width: '200px',
-  backgroundColor: 'white',
-  zIndex: 1,
-  position: 'absolute',
-  top: 0
+  show: PropTypes.bool.isRequired,
+  stores: PropTypes.array.isRequired,
+  width: PropTypes.string.isRequired
 };
 
 export default FavoriteStores;

@@ -5,6 +5,7 @@ import Header from './header/Header';
 import FavoriteBanner from './favorite_banner/Banner';
 import FavoriteList from './favorite_list/List';
 import { toggleMarkerFavorite } from './map/utils';
+import isMobile from '../utils/detectMobile';
 
 import stores from '../data/store_directory.json';
 
@@ -82,6 +83,8 @@ class Container extends Component {
   };
 
   render() {
+    const listWidth = isMobile.any() ? '200px' : '400px';
+
     return (
       <div style={divStyle}>
         <Header toggleMenu={this.toggleMenu} />
@@ -93,16 +96,20 @@ class Container extends Component {
         >
           {this.state.storeSelected &&
             <FavoriteBanner
+              closeBanner={this.unSelectStore}
+              listWidth={listWidth}
+              listOpen={this.state.showFavoriteList}
               store={this.state.storeSelected}
               storeIndex={this.state.storeIndex}
               toggleStoreToFavorites={this.toggleStoreToFavorites}
-              closeBanner={this.unSelectStore}
             />}
-          {this.state.showFavoriteList &&
-            <FavoriteList
-              removeStore={this.toggleStoreToFavorites}
-              stores={this.state.stores}
-            />}
+
+          <FavoriteList
+            removeStore={this.toggleStoreToFavorites}
+            show={this.state.showFavoriteList}
+            stores={this.state.stores}
+            width={listWidth}
+          />
         </CustomMap>
       </div>
     );
