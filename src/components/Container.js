@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FavoriteStores from './favorite_stores/List';
 import CustomMap from './map/Map';
+import Header from './header/Header';
 
 class Container extends Component {
   cleanPreviewStore = () => {
@@ -12,7 +12,7 @@ class Container extends Component {
   render() {
     return (
       <div style={divStyle}>
-        <FavoriteStores cleanPreviewStore={this.cleanPreviewStore} />
+        <Header />
         <CustomMap />
       </div>
     );
