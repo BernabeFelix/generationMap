@@ -9,6 +9,14 @@ import isMobile from '../utils/detectMobile';
 
 import stores from '../data/store_directory.json';
 
+const getStoresUpdated = (oldStores, index, storeUpdated) => {
+  return [
+    ...oldStores.slice(0, index),
+    storeUpdated,
+    ...oldStores.slice(index + 1)
+  ];
+};
+
 class Container extends Component {
   constructor() {
     super();
@@ -22,12 +30,13 @@ class Container extends Component {
 
   addMarkerToStore = (marker, index) => {
     this.setState(prevState => {
+      const storeUpdated = {
+        ...prevState.stores[index],
+        marker,
+        isFavorite: false
+      };
       return {
-        stores: [
-          ...prevState.stores.slice(0, index),
-          { ...prevState.stores[index], marker, isFavorite: false },
-          ...prevState.stores.slice(index + 1)
-        ]
+        stores: getStoresUpdated(prevState.stores, index, storeUpdated)
       };
     });
   };
@@ -67,11 +76,7 @@ class Container extends Component {
       // update stores array
       // update storeSelected to display colored heart
       const newState = {
-        stores: [
-          ...prevState.stores.slice(0, index),
-          storeUpdated,
-          ...prevState.stores.slice(index + 1)
-        ],
+        stores: getStoresUpdated(prevState.stores, index, storeUpdated),
         storeSelected: storeUpdated
       };
 
@@ -121,8 +126,7 @@ class Container extends Component {
 var divStyle = {
   border: 'red',
   borderWidth: 2,
-  borderStyle: 'solid',
-  padding: 20
+  borderStyle: 'solid'
 };
 
 export default Container;
