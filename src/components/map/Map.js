@@ -97,6 +97,7 @@ export default class GenerationMap extends Component {
               store={this.state.storeInfo}
               storeIndex={this.state.storeIndex}
               toggleStoreToFavorites={this.toggleStoreToFavorites}
+              closeBanner={this.markerLostFocus}
             />
           : ''}
       </div>

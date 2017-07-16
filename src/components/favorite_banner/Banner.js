@@ -13,6 +13,7 @@ import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 
 class Banner extends Component {
   static propTypes = {
+    closeBanner: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
     storeIndex: PropTypes.number.isRequired,
     toggleStoreToFavorites: PropTypes.func.isRequired
@@ -23,7 +24,7 @@ class Banner extends Component {
   };
 
   render() {
-    const deleteFavoriteButton = (
+    const rightButton = (
       <IconButton
         tooltip="remove"
         iconStyle={{
@@ -32,9 +33,7 @@ class Banner extends Component {
           height: '30px'
         }}
         hoveredStyle={{ color: '#000' }}
-        onClick={() => {
-          console.log(`store removed click: ${i}`);
-        }}
+        onClick={this.props.closeBanner}
       >
         <NavigationCancel />
       </IconButton>
@@ -53,7 +52,7 @@ class Banner extends Component {
           <List>
             <ListItem
               primaryText={this.props.store.Name}
-              rightIconButton={deleteFavoriteButton}
+              rightIconButton={rightButton}
               secondaryText={this.props.store.Address}
             />
           </List>
