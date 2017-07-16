@@ -26,7 +26,7 @@ const Banner = ({
 
   return (
     <div style={styles}>
-      <StoreInfo closeBanner={closeBanner} store={store} />
+      <StoreInfo btnTooltip="close" closeBanner={closeBanner} store={store} />
       <FavoriteToggle store={store} toggleStoreToFavorites={toggleFavorites} />
     </div>
   );

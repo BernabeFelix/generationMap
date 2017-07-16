@@ -5,10 +5,10 @@ import { ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 
-const StoreInfo = ({ closeBanner, store }) => {
+const StoreInfo = ({ btnTooltip, closeBanner, store }) => {
   const rightButton = (
     <IconButton
-      tooltip="remove"
+      tooltip={btnTooltip}
       iconStyle={{
         color: 'rgba(0, 0, 0, 0.6)',
         width: '30px',
@@ -33,6 +33,7 @@ const StoreInfo = ({ closeBanner, store }) => {
 };
 
 StoreInfo.propTypes = {
+  btnTooltip: PropTypes.string.isRequired,
   closeBanner: PropTypes.func.isRequired,
   store: PropTypes.object.isRequired
 };

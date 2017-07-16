@@ -33,6 +33,7 @@ const FavoriteStores = ({ removeStore, show, stores, width }) => {
               .map((store, i) =>
                 <StoreInfo
                   key={i}
+                  btnTooltip="remove"
                   closeBanner={removeStore.bind(null, store.i)}
                   store={store}
                 />
