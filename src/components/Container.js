@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import CustomMap from './map/Map';
 import Header from './header/Header';
 import FavoriteBanner from './favorite_banner/Banner';
-import FavoriteList from './header/FavoriteList';
+import FavoriteList from './favorite_list/List';
 import { toggleMarkerFavorite } from './map/utils';
 
 import stores from '../data/store_directory.json';
