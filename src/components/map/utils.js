@@ -55,15 +55,14 @@ function createMarkersChunk(
   storesChunk,
   chunkInitialIndex
 ) {
-  storesChunk.forEach((storeObj, i) => {
-    createMarker(storeObj, map, geocoder).then(newMarker => {
-      if (newMarker) {
-        newMarker.addListener('click', () =>
-          markerClickCallback(chunkInitialIndex + i)
-        );
-        addMarkerToStore(newMarker, chunkInitialIndex + i);
-      }
-    });
+  storesChunk.forEach(async (storeObj, i) => {
+    const newMarker = await createMarker(storeObj, map, geocoder);
+    if (newMarker) {
+      newMarker.addListener('click', () =>
+        markerClickCallback(chunkInitialIndex + i)
+      );
+      addMarkerToStore(newMarker, chunkInitialIndex + i);
+    }
   });
 }
 
@@ -86,7 +85,7 @@ function createMarker(storeObj, map, geocoder, clickCallback) {
   );
 }
 
-export const getNewMap = (initialPosition, mapRef, mapClickCallback) => {
+export const loadMapApi = () => {
   const GOOGLE_MAPS_API_KEY = 'AIzaSyBMKrNcvNkqm7zpmQpWWaWYav2J8NdCmg4';
   const googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
 
@@ -97,30 +96,25 @@ export const getNewMap = (initialPosition, mapRef, mapClickCallback) => {
         return;
       }
 
-      // create geocoder instance
-      const geocoder = new google.maps.Geocoder();
-
-      // get mexico city's location
-      getLocationByName(geocoder, initialPosition).then(
-        location => {
-          // create map instance
-          const map = new google.maps.Map(mapRef, {
-            center: location,
-            scrollwheel: false,
-            zoom: isMobile.any() ? 12 : 10
-          });
-
-          map.addListener('click', mapClickCallback);
-
-          resolve({ map, geocoder });
-        },
-        error => reject(error)
-      );
+      resolve();
     }); //end load
   }); //end promise
 };
 
-function getLocationByName(geocoder, address) {
+export const getNewMap = (location, mapRef, mapClickCallback) => {
+  // create map instance
+  const map = new google.maps.Map(mapRef, {
+    center: location,
+    scrollwheel: false,
+    zoom: isMobile.any() ? 12 : 10
+  });
+
+  map.addListener('click', mapClickCallback);
+
+  return map;
+};
+
+export const getLocationByName = (geocoder, address) => {
   return new Promise((resolve, reject) => {
     geocoder.geocode({ address }, (results, status) => {
       if (status !== 'OK') {
@@ -131,7 +125,7 @@ function getLocationByName(geocoder, address) {
       resolve(results[0].geometry.location);
     });
   });
-}
+};
 
 export const toggleMarkerFavorite = (marker, isFavorite) => {
   const blueMarker = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
