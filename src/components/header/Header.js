@@ -1,19 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
-import AppBar from './AppBar';
-
-class Header extends Component {
-  render() {
-    return (
-      <div>
-        <MuiThemeProvider>
-          <AppBar />
-        </MuiThemeProvider>
-      </div>
-    );
-  }
-}
+const Header = ({ toggleMenu }) => {
+  return (
+    <MuiThemeProvider>
+      <AppBar
+        title="Generation Stores Map"
+        iconElementLeft={
+          <IconButton onClick={toggleMenu}>
+            <NavigationMenu />
+          </IconButton>
+        }
+      />
+    </MuiThemeProvider>
+  );
+};
 
 export default Header;

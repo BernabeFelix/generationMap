@@ -133,7 +133,7 @@ function getLocationByName(geocoder, address) {
   });
 }
 
-export const toggleMarketFavorite = (marker, isFavorite) => {
+export const toggleMarkerFavorite = (marker, isFavorite) => {
   const blueMarker = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
   marker.setIcon(isFavorite ? blueMarker : defaultIcon);
 };
