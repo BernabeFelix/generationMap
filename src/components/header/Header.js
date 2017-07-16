@@ -5,16 +5,17 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
-const Header = ({ toggleMenu }) => {
+const Header = ({ height, toggleMenu }) => {
   return (
     <MuiThemeProvider>
       <AppBar
-        title="Generation Stores Map"
         iconElementLeft={
           <IconButton onClick={toggleMenu}>
             <NavigationMenu />
           </IconButton>
         }
+        style={{ height }}
+        title="Generation Stores Map"
       />
     </MuiThemeProvider>
   );

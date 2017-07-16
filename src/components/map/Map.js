@@ -6,9 +6,15 @@ import { createMarkers, getNewMap } from './utils';
 export default class GenerationMap extends Component {
   static propTypes = {
     addMarkerToStore: PropTypes.func.isRequired,
+    headerHeight: PropTypes.string.isRequired,
     markerLostFocus: PropTypes.func.isRequired,
     showStoreInfo: PropTypes.func.isRequired,
     stores: PropTypes.array.isRequired
+  };
+
+  mapStyle = {
+    width: '100%',
+    height: `calc(100vh - ${this.props.headerHeight})`
   };
 
   componentDidMount() {
@@ -37,14 +43,9 @@ export default class GenerationMap extends Component {
   render() {
     return (
       <div style={{ position: 'relative' }}>
-        <div ref="map" style={mapStyle} />
+        <div ref="map" style={this.mapStyle} />
         {this.props.children}
       </div>
     );
   }
 }
-
-const mapStyle = {
-  width: '100%',
-  height: '100vh'
-};

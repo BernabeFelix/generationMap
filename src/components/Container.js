@@ -14,7 +14,7 @@ class Container extends Component {
     super();
     this.state = {
       stores,
-      showFavoriteList: false,
+      showFavoriteList: !isMobile.any(), //show for desktop as default
       storeSelected: undefined,
       storeIndex: undefined
     };
@@ -84,12 +84,14 @@ class Container extends Component {
 
   render() {
     const listWidth = isMobile.any() ? '200px' : '400px';
+    const headerHeight = '64px';
 
     return (
       <div style={divStyle}>
-        <Header toggleMenu={this.toggleMenu} />
+        <Header toggleMenu={this.toggleMenu} width={headerHeight} />
         <CustomMap
           addMarkerToStore={this.addMarkerToStore}
+          headerHeight={headerHeight}
           markerLostFocus={this.unSelectStore}
           stores={this.state.stores}
           showStoreInfo={this.showStoreInfo}

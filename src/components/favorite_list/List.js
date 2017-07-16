@@ -24,18 +24,19 @@ const FavoriteStores = ({ removeStore, show, stores, width }) => {
           <Subheader style={{ fontFamily: 'Roboto, sans-serif' }}>
             {subheaderStr}
           </Subheader>
-          {stores
-            .map((store, i) => {
-              return { ...store, i };
-            })
-            .filter(store => store.isFavorite)
-            .map((store, i) =>
-              <StoreInfo
-                key={i}
-                closeBanner={removeStore.bind(null, store.i)}
-                store={store}
-              />
-            )}
+          {show &&
+            stores
+              .map((store, i) => {
+                return { ...store, i };
+              })
+              .filter(store => store.isFavorite)
+              .map((store, i) =>
+                <StoreInfo
+                  key={i}
+                  closeBanner={removeStore.bind(null, store.i)}
+                  store={store}
+                />
+              )}
         </List>
       </MuiThemeProvider>
     </div>
