@@ -31,7 +31,7 @@ class Container extends Component {
     });
   };
 
-  markerLostFocus = () => {
+  unSelectStore = () => {
     // there is marker data showing to user
     if (this.state.storeSelected) {
       this.setState({
@@ -87,6 +87,7 @@ class Container extends Component {
         <Header toggleMenu={this.toggleMenu} />
         <CustomMap
           addMarkerToStore={this.addMarkerToStore}
+          markerLostFocus={this.unSelectStore}
           stores={this.state.stores}
           showStoreInfo={this.showStoreInfo}
         >
@@ -95,7 +96,7 @@ class Container extends Component {
               store={this.state.storeSelected}
               storeIndex={this.state.storeIndex}
               toggleStoreToFavorites={this.toggleStoreToFavorites}
-              closeBanner={this.markerLostFocus}
+              closeBanner={this.unSelectStore}
             />}
           {this.state.showFavoriteList &&
             <FavoriteList

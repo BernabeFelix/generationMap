@@ -6,6 +6,7 @@ import { createMarkers, getNewMap } from './utils';
 export default class GenerationMap extends Component {
   static propTypes = {
     addMarkerToStore: PropTypes.func.isRequired,
+    markerLostFocus: PropTypes.func.isRequired,
     showStoreInfo: PropTypes.func.isRequired,
     stores: PropTypes.array.isRequired
   };
@@ -15,7 +16,7 @@ export default class GenerationMap extends Component {
   }
 
   initMap() {
-    getNewMap('Mexico City', this.refs.map, this.markerLostFocus).then(
+    getNewMap('Mexico City', this.refs.map, this.props.markerLostFocus).then(
       ({ map, geocoder }) => {
         const stores = this.props.stores;
         createMarkers(
