@@ -1,4 +1,3 @@
-'use strict';
 import load from 'little-loader';
 import isMobile from '../../utils/detectMobile';
 
