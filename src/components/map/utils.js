@@ -86,7 +86,7 @@ function createMarker(storeObj, map, geocoder, clickCallback) {
   );
 }
 
-export const getNewMap = (initialPosition, mapRef) => {
+export const getNewMap = (initialPosition, mapRef, mapClickCallback) => {
   const GOOGLE_MAPS_API_KEY = 'AIzaSyBMKrNcvNkqm7zpmQpWWaWYav2J8NdCmg4';
   const googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
 
@@ -109,6 +109,8 @@ export const getNewMap = (initialPosition, mapRef) => {
             scrollwheel: false,
             zoom: isMobile.any() ? 12 : 10
           });
+
+          map.addListener('click', mapClickCallback);
 
           resolve({ map, geocoder });
         },

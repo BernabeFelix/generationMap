@@ -51,6 +51,15 @@ export default class GenerationMap extends Component {
     });
   };
 
+  markerLostFocus = () => {
+    // there is marker data showing to user
+    if (this.state.storeInfo) {
+      this.setState({
+        storeInfo: null
+      });
+    }
+  };
+
   showStoreInfo = storeIndex => {
     this.setState(prevState => {
       return {
@@ -61,7 +70,7 @@ export default class GenerationMap extends Component {
   };
 
   initMap() {
-    getNewMap('Mexico City', this.refs.map).then(
+    getNewMap('Mexico City', this.refs.map, this.markerLostFocus).then(
       ({ map, geocoder }) => {
         const stores = this.state.stores;
         createMarkers(
