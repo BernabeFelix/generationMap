@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import StoreInfo from '../favorite_banner/StoreInfo';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { List, Subheader } from 'material-ui';
 
-const FavoriteStores = ({ stores }) => {
-  const removeFromFavorites = () => {
-    console.log('item deleted');
-  };
-
+const FavoriteStores = ({ stores, removeStore }) => {
   return (
     <div style={styles}>
       <MuiThemeProvider>
@@ -18,11 +14,14 @@ const FavoriteStores = ({ stores }) => {
             My Favorite Stores
           </Subheader>
           {stores
+            .map((store, i) => {
+              return { ...store, i };
+            })
             .filter(store => store.isFavorite)
             .map((store, i) =>
               <StoreInfo
                 key={i}
-                closeBanner={removeFromFavorites}
+                closeBanner={removeStore.bind(null, store.i)}
                 store={store}
               />
             )}
@@ -30,6 +29,11 @@ const FavoriteStores = ({ stores }) => {
       </MuiThemeProvider>
     </div>
   );
+};
+
+FavoriteStores.propTypes = {
+  removeStore: PropTypes.func.isRequired,
+  stores: PropTypes.array.isRequired
 };
 
 const styles = {

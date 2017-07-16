@@ -14,7 +14,7 @@ class Container extends Component {
     this.state = {
       stores,
       showFavoriteList: false,
-      storeInfo: undefined,
+      storeSelected: undefined,
       storeIndex: undefined
     };
   }
@@ -33,11 +33,20 @@ class Container extends Component {
 
   markerLostFocus = () => {
     // there is marker data showing to user
-    if (this.state.storeInfo) {
+    if (this.state.storeSelected) {
       this.setState({
-        storeInfo: null
+        storeSelected: null
       });
     }
+  };
+
+  showStoreInfo = storeIndex => {
+    this.setState(prevState => {
+      return {
+        storeSelected: prevState.stores[storeIndex],
+        storeIndex
+      };
+    });
   };
 
   toggleMenu = () => {
@@ -55,29 +64,20 @@ class Container extends Component {
       // update store, set isFavorite flag to true
       const storeUpdated = { ...storeToToggle, isFavorite };
       // update stores array
-      // update storeInfo to display colored heart
+      // update storeSelected to display colored heart
       const newState = {
         stores: [
           ...prevState.stores.slice(0, index),
           storeUpdated,
           ...prevState.stores.slice(index + 1)
         ],
-        storeInfo: storeUpdated
+        storeSelected: storeUpdated
       };
 
       // update marker
       toggleMarkerFavorite(storeUpdated.marker, isFavorite);
 
       return newState;
-    });
-  };
-
-  showStoreInfo = storeIndex => {
-    this.setState(prevState => {
-      return {
-        storeInfo: prevState.stores[storeIndex],
-        storeIndex
-      };
     });
   };
 
@@ -90,15 +90,18 @@ class Container extends Component {
           stores={this.state.stores}
           showStoreInfo={this.showStoreInfo}
         >
-          {this.state.storeInfo &&
+          {this.state.storeSelected &&
             <FavoriteBanner
-              store={this.state.storeInfo}
+              store={this.state.storeSelected}
               storeIndex={this.state.storeIndex}
               toggleStoreToFavorites={this.toggleStoreToFavorites}
               closeBanner={this.markerLostFocus}
             />}
           {this.state.showFavoriteList &&
-            <FavoriteList stores={this.state.stores} />}
+            <FavoriteList
+              removeStore={this.toggleStoreToFavorites}
+              stores={this.state.stores}
+            />}
         </CustomMap>
       </div>
     );
