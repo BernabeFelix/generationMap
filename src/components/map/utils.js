@@ -11,9 +11,9 @@ export const createMarkers = (
   stores
 ) => {
   // Note: This has to be done this way because google maps api has a request limit
-  const maxReqPerSec = 1;
   const delay = 900;
-  const loops = Math.ceil(stores.length / maxReqPerSec); //e.g. 233/50 = 5
+  const maxReqPerDelay = 1;
+  const loops = Math.ceil(stores.length / maxReqPerDelay); //e.g. 233/50 = 5
   let storesChunk = [];
 
   for (var i = 0; i < loops; i++) {
@@ -23,9 +23,9 @@ export const createMarkers = (
     ...
     */
     if (i === loops.length - 1) {
-      storesChunk = stores.slice(i * maxReqPerSec);
+      storesChunk = stores.slice(i * maxReqPerDelay);
     } else {
-      storesChunk = stores.slice(i * maxReqPerSec, (i + 1) * maxReqPerSec);
+      storesChunk = stores.slice(i * maxReqPerDelay, (i + 1) * maxReqPerDelay);
     }
     // create markers every sec
     setTimeout(
@@ -37,7 +37,7 @@ export const createMarkers = (
             map,
             markerClickCallback,
             storesChunk,
-            i * maxReqPerSec
+            i * maxReqPerDelay
           );
         };
       })(storesChunk, i),
