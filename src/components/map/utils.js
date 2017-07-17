@@ -84,7 +84,7 @@ function createMarker(storeObj, map, geocoder, clickCallback) {
 }
 
 export const loadMapApi = () => {
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyBMKrNcvNkqm7zpmQpWWaWYav2J8NdCmg4';
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyCVH8e45o3d-5qmykzdhGKd1-3xYua5D2A';
   const googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}`;
 
   return new Promise((resolve, reject) => {

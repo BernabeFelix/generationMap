@@ -92,7 +92,7 @@ class Container extends Component {
   };
 
   render() {
-    const listWidth = isMobile.any() ? '200px' : '400px';
+    const listWidth = isMobile.any() ? '100%' : '400px';
     const headerHeight = '64px';
 
     return (
