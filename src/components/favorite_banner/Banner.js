@@ -8,7 +8,7 @@ const Banner = ({
   listWidth,
   listOpen,
   store,
-  storeIndex,
+  toggleMarkerFavorite,
   toggleStoreToFavorites
 }) => {
   const styles = {
@@ -20,14 +20,14 @@ const Banner = ({
     width: `calc(100% - ${listOpen ? listWidth : '0%'})`
   };
 
-  const toggleFavorites = () => {
-    toggleStoreToFavorites(storeIndex);
-  };
-
   return (
     <div style={styles}>
       <StoreInfo btnTooltip="close" closeBanner={closeBanner} store={store} />
-      <FavoriteToggle store={store} toggleStoreToFavorites={toggleFavorites} />
+      <FavoriteToggle
+        store={store}
+        toggleMarkerFavorite={toggleMarkerFavorite}
+        toggleStoreToFavorites={toggleStoreToFavorites}
+      />
     </div>
   );
 };
@@ -37,7 +37,7 @@ Banner.propTypes = {
   listWidth: PropTypes.string.isRequired,
   listOpen: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
-  storeIndex: PropTypes.number.isRequired,
+  toggleMarkerFavorite: PropTypes.func.isRequired,
   toggleStoreToFavorites: PropTypes.func.isRequired
 };
 

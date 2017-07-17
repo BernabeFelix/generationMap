@@ -5,7 +5,13 @@ import StoreInfo from '../favorite_banner/StoreInfo';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { List, Subheader } from 'material-ui';
 
-const FavoriteStores = ({ removeStore, show, stores, width }) => {
+const FavoriteStores = ({
+  removeStore,
+  setMarkerDefault,
+  show,
+  stores,
+  width
+}) => {
   const subheaderStr = show ? 'My Favorite Stores' : '';
   const styles = {
     height: '100%',
@@ -15,6 +21,13 @@ const FavoriteStores = ({ removeStore, show, stores, width }) => {
     position: 'absolute',
     top: 0,
     transition: 'width 1s'
+  };
+  const removeStoreAndMarker = i => {
+    return e => {
+      console.log('StoreI: ' + i);
+      removeStore(i);
+      setMarkerDefault(i);
+    };
   };
 
   return (
@@ -34,7 +47,7 @@ const FavoriteStores = ({ removeStore, show, stores, width }) => {
                 <StoreInfo
                   key={i}
                   btnTooltip="remove"
-                  closeBanner={removeStore.bind(null, store.i)}
+                  closeBanner={removeStoreAndMarker(store.i)}
                   store={store}
                 />
               )}
@@ -46,6 +59,7 @@ const FavoriteStores = ({ removeStore, show, stores, width }) => {
 
 FavoriteStores.propTypes = {
   removeStore: PropTypes.func.isRequired,
+  setMarkerDefault: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   stores: PropTypes.array.isRequired,
   width: PropTypes.string.isRequired

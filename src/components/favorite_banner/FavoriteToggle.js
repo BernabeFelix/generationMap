@@ -7,14 +7,22 @@ import {
 } from 'material-ui/BottomNavigation';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 
-const FavoriteToggle = ({ store, toggleStoreToFavorites }) => {
+const FavoriteToggle = ({
+  store,
+  toggleMarkerFavorite,
+  toggleStoreToFavorites
+}) => {
+  const updateStore = () => {
+    toggleStoreToFavorites();
+    toggleMarkerFavorite();
+  };
   return (
     <MuiThemeProvider>
       <BottomNavigation selectedIndex={store.isFavorite ? 0 : -1}>
         <BottomNavigationItem
           label="Favorites"
           icon={<ActionFavorite />}
-          onClick={toggleStoreToFavorites}
+          onClick={updateStore}
         />
       </BottomNavigation>
     </MuiThemeProvider>
@@ -23,6 +31,7 @@ const FavoriteToggle = ({ store, toggleStoreToFavorites }) => {
 
 FavoriteToggle.propTypes = {
   store: PropTypes.object.isRequired,
+  toggleMarkerFavorite: PropTypes.func.isRequired,
   toggleStoreToFavorites: PropTypes.func.isRequired
 };
 

@@ -45,7 +45,8 @@ class Container extends Component {
     // there is marker data showing to user
     if (this.state.storeSelected) {
       this.setState({
-        storeSelected: null
+        storeSelected: null,
+        storeIndex: null
       });
     }
   };
@@ -67,7 +68,13 @@ class Container extends Component {
     });
   };
 
-  toggleStoreToFavorites = index => {
+  toggleMarkerFavorite = (index = this.state.storeIndex) => {
+    const store = this.state.stores[index];
+    const isFavorite = !store.isFavorite;
+    toggleMarkerFavorite(store.marker, isFavorite);
+  };
+
+  toggleStoreToFavorites = (index = this.state.storeIndex) => {
     this.setState(prevState => {
       const storeToToggle = prevState.stores[index];
       const isFavorite = !storeToToggle.isFavorite;
@@ -79,9 +86,6 @@ class Container extends Component {
         stores: getStoresUpdated(prevState.stores, index, storeUpdated),
         storeSelected: storeUpdated
       };
-
-      // update marker
-      toggleMarkerFavorite(storeUpdated.marker, isFavorite);
 
       return newState;
     });
@@ -107,12 +111,13 @@ class Container extends Component {
               listWidth={listWidth}
               listOpen={this.state.showFavoriteList}
               store={this.state.storeSelected}
-              storeIndex={this.state.storeIndex}
               toggleStoreToFavorites={this.toggleStoreToFavorites}
+              toggleMarkerFavorite={this.toggleMarkerFavorite}
             />}
 
           <FavoriteList
             removeStore={this.toggleStoreToFavorites}
+            setMarkerDefault={this.toggleMarkerFavorite}
             show={this.state.showFavoriteList}
             stores={this.state.stores}
             width={listWidth}
