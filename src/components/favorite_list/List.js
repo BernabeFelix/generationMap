@@ -14,13 +14,14 @@ const FavoriteStores = ({
 }) => {
   const subheaderStr = show ? 'My Favorite Stores' : '';
   const styles = {
-    height: '100%',
-    width: show ? width : 0,
     backgroundColor: 'white',
-    zIndex: 1,
+    height: '100%',
+    overflowY: 'scroll',
     position: 'absolute',
     top: 0,
-    transition: 'width 1s'
+    transition: 'width 1s',
+    width: show ? width : 0,
+    zIndex: 1
   };
   const removeStoreAndMarker = i => {
     return e => {
