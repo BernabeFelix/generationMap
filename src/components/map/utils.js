@@ -10,10 +10,10 @@ export const createMarkers = (
   markerClickCallback,
   stores
 ) => {
-  // Note: This has to be done because google maps api has a request limit
+  // Note: This has to be done this way because google maps api has a request limit
   const maxReqPerSec = 1;
-  //todo: remove this comments
-  const loops = 4; //Math.ceil(stores.length / maxReqPerSec); //e.g. 233/50 = 5
+  const delay = 900;
+  const loops = Math.ceil(stores.length / maxReqPerSec); //e.g. 233/50 = 5
   let storesChunk = [];
 
   for (var i = 0; i < loops; i++) {
@@ -41,7 +41,7 @@ export const createMarkers = (
           );
         };
       })(storesChunk, i),
-      1000 * i
+      delay * i
     );
   }
 };
@@ -71,8 +71,7 @@ function createMarker(storeObj, map, geocoder, clickCallback) {
       return new google.maps.Marker({
         icon: defaultIcon,
         map,
-        position,
-        animation: google.maps.Animation.DROP
+        position
       });
     },
     error => {
