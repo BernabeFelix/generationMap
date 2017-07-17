@@ -24,7 +24,6 @@ const FavoriteStores = ({
   };
   const removeStoreAndMarker = i => {
     return e => {
-      console.log('StoreI: ' + i);
       removeStore(i);
       setMarkerDefault(i);
     };
